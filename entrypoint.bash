@@ -200,7 +200,7 @@ runRealcugan() {
         local signature=$(printf ${modelfmt} ${scalefactor})
         local outputfilename="${output%/}/${filename}_${signature}.png"
         imgOrig=${img}
-        execRealesrgan=$("${binary}" -i "${img}" -o "${outputfilename}" -s "${scalefactor}")
+        stdOutErr=$("${binary}" -i "${img}" -o "${outputfilename}" -s "${scalefactor}" 2>&1)
         img=${outputfilename}
         if [ ${i} -gt 1 ]; then
             #not to remove image from the input directory
