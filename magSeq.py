@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+#weight: #1 shortest, #2 smallest total scale factor
+
+import sys
+
 factorLst = [2, 3, 4]
 sepStr = ":"
 resMap = {}
@@ -22,7 +26,7 @@ def calMagTotalFactor(seq: list) -> int:
         totalFactor = totalFactor * factor
     return totalFactor
 
-def calMagSeq(scale: int, resPrev: list):
+def calMagSeq(scale, resPrev: list):
     if scale <= 1:
         # no need to upscale. save the result
         resPrev.sort()
@@ -54,7 +58,13 @@ def getBestSeq() -> list:
 
     return bestSeq
 
+def getScaleFromArgs():
+    scaleStr = sys.argv[1]
+    if "." in scaleStr:
+        return float(scaleStr)
+    return int(scaleStr)
 
 emptyLst = []
-calMagSeq(19, emptyLst)
+scale = getScaleFromArgs()
+calMagSeq(scale, emptyLst)
 print(getBestSeq())
