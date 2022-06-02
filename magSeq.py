@@ -4,19 +4,25 @@ factorLst = [2, 3, 4]
 sepStr = ":"
 resMap = {}
 
-def lstToStr(lst):
+def lstToStr(lst: list) -> str:
     strVal = sepStr.join([str(x) for x in lst])
     # print(strVal)
     return strVal
 
-def strTolst(str):
+def strTolst(str: str) -> list:
     numLst = []
     strLst = str.split(sepStr)
     for str in strLst:
         numLst.append(int(str))
     return numLst
 
-def calMagSeq(scale, resPrev: list):
+def calMagTotalFactor(seq: list) -> int:
+    totalFactor = 1
+    for factor in seq:
+        totalFactor = totalFactor * factor
+    return totalFactor
+
+def calMagSeq(scale: int, resPrev: list):
     if scale <= 1:
         # no need to upscale. save the result
         resPrev.sort()
@@ -29,6 +35,26 @@ def calMagSeq(scale, resPrev: list):
         cpyResPrev.append(factor)
         calMagSeq(scale/factor, cpyResPrev)
 
+def getBestSeq() -> list:
+    bestSeqs = []
+    for seqStr in resMap:
+        lst = strTolst(seqStr)
+        length = len(lst)
+        if len(bestSeqs) == 0 or length == len(bestSeqs[0]):
+            bestSeqs.append(lst)
+            continue
+        if length < len(bestSeqs[0]):
+            bestSeqs = [lst]
+            continue
+
+    bestSeq = []
+    for seq in bestSeqs:
+        if len(bestSeq) == 0 or calMagTotalFactor(seq) < calMagTotalFactor(bestSeq):
+            bestSeq = seq
+
+    return bestSeq
+
+
 emptyLst = []
-calMagSeq(4, emptyLst)
-print(resMap.keys())
+calMagSeq(19, emptyLst)
+print(getBestSeq())
