@@ -30,6 +30,7 @@ def calMagSeq(scale, resPrev: list):
     if scale <= 1:
         # no need to upscale. save the result
         resPrev.sort()
+        global resMap
         resMap[lstToStr(resPrev)] = True
         return
     for factor in factorLst:
@@ -41,6 +42,7 @@ def calMagSeq(scale, resPrev: list):
 
 def getBestSeq() -> list:
     bestSeqs = []
+    global resMap
     for seqStr in resMap:
         lst = strTolst(seqStr)
         length = len(lst)
